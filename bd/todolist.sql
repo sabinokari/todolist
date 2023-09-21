@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-09-2023 a las 04:48:53
+-- Tiempo de generación: 21-09-2023 a las 06:56:26
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `todolist`
 --
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuarionuevo` (`ID` INT, `NOM` VARCHAR(30), `APE` VARCHAR(30), `CARG` VARCHAR(30), `DNI` INT, `TELEF` VARCHAR(9), `USU` VARCHAR(20), `CONTRA` VARCHAR(20))   BEGIN
+INSERT INTO USUARIO 
+VALUES(ID, NOM, APE, CARG, DNI, TELEF, USU, CONTRA);
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -56,6 +67,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `cargo`, `dni`, `telefono`, `usuario`, `contrasenia`) VALUES
 (1, 'Sabino', 'Kari', 'Operador', 43434343, '756354625', 'admin', 'admin'),
+(1, 'Sabino', 'Kari', 'Operador', 43434343, '756354625', 'admin', 'admin'),
+(0, 'Juan', 'Perez', 'Gerente', 43434343, '545454545', 'jperez', '123');
 
 --
 -- Índices para tablas volcadas
