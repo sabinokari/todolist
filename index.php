@@ -54,4 +54,28 @@
 
 </body>
 
+
+
+<table width="550" class="table table-hover">
+                <tr>
+                    <?php
+                    echo "Usuario Logueado: " . $_SESSION["nombres"] . " " . $_SESSION["apellidos"];
+                    ?>
+
+                    <td align="right">
+
+
+                        <a href="agregarusuario.php" class="btn btn-success">
+                            <i class='bi bi-file-earmark-pdf'></i>
+                            <span>NUEVO USUARIO</span>
+                        </a>
+
+                        
+                    </td>
+
+                </tr>
+        
+
+            </table>
+
 </html>
