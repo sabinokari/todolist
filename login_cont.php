@@ -15,7 +15,7 @@ if (!empty($_POST["btningresar"])) {
        
 
 
-            header ("location:home.php");
+            header ("location:home.html");
         } else {
             echo "<div>Acceso Denegado</div>";
         }

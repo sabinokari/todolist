@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-09-2023 a las 01:43:39
+-- Tiempo de generación: 21-09-2023 a las 04:48:53
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -32,6 +32,30 @@ CREATE TABLE `tareas` (
   `tarea` varchar(255) NOT NULL,
   `completada` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `idusuario` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `apellido` varchar(30) NOT NULL,
+  `cargo` varchar(30) NOT NULL,
+  `dni` int(11) NOT NULL,
+  `telefono` varchar(9) NOT NULL,
+  `usuario` varchar(20) NOT NULL,
+  `contrasenia` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `cargo`, `dni`, `telefono`, `usuario`, `contrasenia`) VALUES
+(1, 'Sabino', 'Kari', 'Operador', 43434343, '756354625', 'admin', 'admin'),
 
 --
 -- Índices para tablas volcadas

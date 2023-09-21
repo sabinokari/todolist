@@ -29,7 +29,7 @@
                   <i class="fas fa-user"></i>
                </div>
                <div class="div">
-               <center> <h5>Usuario</h5></center>
+               <center> <h5>Usuario (admin)</h5></center>
                   <center> <input id="usuario" type="text" class="input" name="usuario"></center>
                </div>
             </div>
@@ -38,7 +38,7 @@
                   <i class="fas fa-lock"></i>
                </div>
                <div class="div">
-               <center><h5>Contraseña</h5></center>
+               <center><h5>Contraseña (admin)</h5></center>
                <center><input type="password" id="input" class="input" name="password"></center>
                </div>
             </div>
