@@ -47,14 +47,10 @@
             </div>
   
             <center><input name="btningresar" class="btn" type="submit" value="INICIAR SESION"></center>
-
          </form>
       </div>
    </div>
-
 </body>
-
-
 
 <table width="550" class="table table-hover">
                 <tr>

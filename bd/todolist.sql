@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-09-2023 a las 06:56:26
+-- Tiempo de generación: 23-09-2023 a las 04:33:21
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -25,6 +25,11 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertartareas` (`TA` VARCHAR(100), `COM` TINYINT)   BEGIN
+INSERT INTO TAREAS (TAREA,COMPLETADA)
+VALUES(TA,COM);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuarionuevo` (`ID` INT, `NOM` VARCHAR(30), `APE` VARCHAR(30), `CARG` VARCHAR(30), `DNI` INT, `TELEF` VARCHAR(9), `USU` VARCHAR(20), `CONTRA` VARCHAR(20))   BEGIN
 INSERT INTO USUARIO 
 VALUES(ID, NOM, APE, CARG, DNI, TELEF, USU, CONTRA);
@@ -43,6 +48,17 @@ CREATE TABLE `tareas` (
   `tarea` varchar(255) NOT NULL,
   `completada` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tareas`
+--
+
+INSERT INTO `tareas` (`id`, `tarea`, `completada`) VALUES
+(11, 'trabajar', 0),
+(12, 'Jugar', 0),
+(13, 'Manejar', 0),
+(16, 'Manejar', 1),
+(17, 'Jugarr', 1);
 
 -- --------------------------------------------------------
 
@@ -68,7 +84,8 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `cargo`, `dni`, `telefono`, `usuario`, `contrasenia`) VALUES
 (1, 'Sabino', 'Kari', 'Operador', 43434343, '756354625', 'admin', 'admin'),
 (1, 'Sabino', 'Kari', 'Operador', 43434343, '756354625', 'admin', 'admin'),
-(0, 'Juan', 'Perez', 'Gerente', 43434343, '545454545', 'jperez', '123');
+(0, 'Juan', 'Perez', 'Gerente', 43434343, '545454545', 'jperez', '123'),
+(0, 'sabino', 'kari', 'adsfasdf', 34234234, '33242342|', 'skari', '123456');
 
 --
 -- Índices para tablas volcadas
@@ -88,7 +105,7 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
