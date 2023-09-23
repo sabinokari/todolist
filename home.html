@@ -1,55 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tareas</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 
 </head>
+
 <body>
     <div class="container">
         <h1>Todo List </h1>
         <div class="search">
-            <form>
-                <input type="text" placeholder="Agregar tarea a la lista...">
-                <button class="btn-add">+</button>
+            <form id="frmTodoList" name="frmTodoList" action="agregartarea.php">
+                <p><input type="button" id="btnAgregar" value="Agregar" /> </p>
+                <p><input type="button" id="btnGuardar" value="Guardar" /></p>
+                <p><input type="button" id="btnListar" value="Listar" /></p>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tarea</th>
+                            <th>Completadas</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl">
+
+                    </tbody>
+                </table>
             </form>
         </div>
-        <div class="li-container">
-            <ul>
-                
-            </ul>
-        </div>
         <div class="empty">
-            <p>No tienes tareas pendientes.</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Tareas</td>
+                        <td>Completada</td>
+                    </tr>
+                </thead>
+                <tbody id="tbllista"></tbody>
+            </table>
         </div>
     </div>
-    <script src="./main.js"></script>
+
 </body>
 
 
 <table width="550" class="table table-hover">
-                <tr>
+    <tr>
 
 
-                    <td align="right">
+        <td align="right">
 
 
-                        <a href="login_cerrarsesion.php" class="btn btn-success">
-                            <i class='bi bi-file-earmark-pdf'></i>
-                            <span>Cerrar Sesion</span>
-                        </a>
+            <a href="login_cerrarsesion.php" class="btn btn-success">
+                <i class='bi bi-file-earmark-pdf'></i>
+                <span>Cerrar Sesion</span>
+            </a>
 
-                        
-                    </td>
 
-                </tr>
-        
+        </td>
 
-            </table>
+    </tr>
 
+
+</table>
+
+<script type="text/javascript">
+    let tbl = document.getElementById("tbl");
+    let btnAgregar = document.getElementById("btnAgregar");
+    let frmTodoList = document.getElementById("frmTodoList");
+    let btnGuardar = document.getElementById("btnGuardar");
+    //let btnListar = document.getElementById("btnListar");
+    const tbllista=document.getElementById("tbllista");
+    let indice = 0;
+    window.onload = function () {
+        btnAgregar.onclick = function () {
+            agregarFilas();
+        };
+        btnGuardar.onclick = function () {
+            enviarFormulario();
+        };
+    }
+    function agregarFilas() {
+        var tr = document.createElement("tr");
+        var txttarea = "<input type='text' name='txttarea' />";
+        var checkbox = "<input type='checkbox' name='chkcompletada' />";
+        var btnEliminar = "<input type='button' name='btnEliminar' value='Eliminar' onclick='Eliminar(this)' />";
+        var html = "";
+        indice = indice + 1;
+        html += "<td>" + (indice) + "</td>";
+        html += "<td>" + txttarea + "</td>";
+        html += "<td>" + checkbox + "</td>";
+        html += "<td>" + btnEliminar + "</td>";
+        tr.innerHTML = html;
+        tbl.appendChild(tr);
+    }
+    function Eliminar(el) {
+        indice--;
+        el.parentElement.parentElement.remove();
+    }
+    function Ajax(url,datos,fn,fnError){
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText == "exito") { 
+                    tbl.innerHTML = "";
+                    fn(xhr.responseText);
+                }
+            }else{
+                fnError(xhr.responseText);
+            }
+        };
+        xhr.send(JSON.stringify(datos));
+    }
+    function enviarFormulario() { 
+        let fila = tbl.querySelectorAll("tr");
+        let columnas = null;
+        let inputTarea = null;
+        let check = null;
+        let totalFilas = fila.length;
+        let datos = [];
+        if (fila.length == 0) {
+            alert("ingrese las tareas");
+            return;
+        }
+        for (let index = 0; index < totalFilas; index++) {
+            columnas = fila[index].querySelectorAll("td");
+            inputTarea = columnas[1].querySelector("input[type=text]");
+            check = columnas[2].querySelector("input[type=checkbox]");
+            datos.push
+                ({
+                    tarea: inputTarea.value,
+                    completada: check.checked
+                });
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "agregartarea.php", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText == "exito") {
+                    alert("La taresa se ha guardado con exito");
+                    tbl.innerHTML = "";
+                }
+            }
+        };
+        //xhr.send(formData); 
+        xhr.send(JSON.stringify(datos));
+    }
+    function listar(){
+        tbllista
+    }
+</script>
 
 </html>
