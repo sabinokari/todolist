@@ -155,11 +155,34 @@
         xhr.open("GET", "listatareas.php", true); 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                tbllista.innerHTML = xhr.responseText;
+                //tbllista.innerHTML = xhr.responseText;
+                var data=xhr.responseText;                
+                var filas=JSON.parse(data);
+                var html="";
+                tbllista.innerHTML="";
+                for(let i=0;i<filas.length;i++){
+                    html= html+"<tr>";
+                    html= html+"<td>"+ filas[i].id + "</td>";
+                    html= html+"<td>"+ filas[i].tarea+ "</td>";
+                    html= html+"<td>"+ (filas[i].completada==true? "si":"no" )+ "</td>";
+                    html= html+"<td><input type='button' name='btneliminar' class='btn btn-primary' value='Eliminar' onclick='Eliminar("+filas[i].id +")' /></td>";
+                    html= html+"</tr>";
+                }                
+                tbllista.innerHTML =html;
             }
         };
         xhr.send(null);
         
+    }
+    function Eliminar(id){
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "listatareas.php", true); 
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                 
+            }
+        };
+        xhr.send(null);
     }
 </script>
 
