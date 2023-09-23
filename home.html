@@ -16,38 +16,51 @@
     <div class="container">
         <h1>Todo List </h1>
         <div class="search">
-            <form id="frmTodoList" name="frmTodoList" action="agregartarea.php">
-                <p><input type="button" id="btnAgregar" value="Agregar" /> </p>
-                <p><input type="button" id="btnGuardar" value="Guardar" /></p>
-                <p><input type="button" id="btnListar" value="Listar" /></p>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Tarea</th>
-                            <th>Completadas</th>
-                            <th>Accion</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbl">
-
-                    </tbody>
-                </table>
-            </form>
-        </div>
-        <div class="empty">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Id</td>
-                        <td>Tareas</td>
-                        <td>Completada</td>
-                        <td>Acción</td>
-                    </tr>
-                </thead>
-                <tbody id="tbllista"></tbody>
-            </table>
-        </div>
+            <div class="row"> 
+                <div class="col-4">
+                    <input type="button" id="btnAgregar" value="Agregar" class="btn btn-success" />
+                </div>
+                <div class="col-4">
+                    <input type="button" id="btnGuardar" value="Guardar" class="btn btn-success"/>
+                </div>
+                <div class="col-4">
+                    <input type="button" id="btnListar" value="Listar" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Tarea</th>
+                                <th>Completadas</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl">
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Tareas</td>
+                                <td>Completada</td>
+                                <td>Acción</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbllista"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div> 
     </div>
 
 </body>
@@ -75,10 +88,8 @@
 
 <script type="text/javascript">
     let tbl = document.getElementById("tbl");
-    let btnAgregar = document.getElementById("btnAgregar");
-    let frmTodoList = document.getElementById("frmTodoList");
-    let btnGuardar = document.getElementById("btnGuardar");
-    //let btnListar = document.getElementById("btnListar");
+    let btnAgregar = document.getElementById("btnAgregar"); 
+    let btnGuardar = document.getElementById("btnGuardar"); 
     const tbllista=document.getElementById("tbllista");
     const btnListar=document.getElementById("btnListar");
     let indice = 0;
@@ -165,7 +176,7 @@
                     html= html+"<td>"+ filas[i].id + "</td>";
                     html= html+"<td>"+ filas[i].tarea+ "</td>";
                     html= html+"<td>"+ (filas[i].completada==true? "si":"no" )+ "</td>";
-                    html= html+"<td><input type='button' name='btneliminar' class='btn btn-primary' value='Eliminar' onclick='Eliminar("+filas[i].id +")' /></td>";
+                    html= html+"<td><input type='button' name='btneliminar' class='btn btn-danger' value='Eliminar' onclick='Eliminar("+filas[i].id +")' /></td>";
                     html= html+"</tr>";
                 }                
                 tbllista.innerHTML =html;
@@ -175,11 +186,18 @@
         
     }
     function Eliminar(id){
+        let res=confirm("¿Esta seguro que quiere eliminar?");
+        if(res==false){
+            return;
+        }
+        let url= "eliminartareas.php?id="+id;
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "listatareas.php", true); 
+        xhr.open("GET", url, true); 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                 
+                 if(xhr.responseText == "exito"){
+                    listar();
+                 }
             }
         };
         xhr.send(null);
