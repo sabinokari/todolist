@@ -42,6 +42,7 @@
                         <td>Id</td>
                         <td>Tareas</td>
                         <td>Completada</td>
+                        <td>Acción</td>
                     </tr>
                 </thead>
                 <tbody id="tbllista"></tbody>
@@ -79,6 +80,7 @@
     let btnGuardar = document.getElementById("btnGuardar");
     //let btnListar = document.getElementById("btnListar");
     const tbllista=document.getElementById("tbllista");
+    const btnListar=document.getElementById("btnListar");
     let indice = 0;
     window.onload = function () {
         btnAgregar.onclick = function () {
@@ -87,6 +89,10 @@
         btnGuardar.onclick = function () {
             enviarFormulario();
         };
+        btnListar.onclick=function(){
+            listar();
+        };
+        listar();
     }
     function agregarFilas() {
         var tr = document.createElement("tr");
@@ -106,22 +112,7 @@
         indice--;
         el.parentElement.parentElement.remove();
     }
-    function Ajax(url,datos,fn,fnError){
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if (xhr.responseText == "exito") { 
-                    tbl.innerHTML = "";
-                    fn(xhr.responseText);
-                }
-            }else{
-                fnError(xhr.responseText);
-            }
-        };
-        xhr.send(JSON.stringify(datos));
-    }
+ 
     function enviarFormulario() { 
         let fila = tbl.querySelectorAll("tr");
         let columnas = null;
@@ -152,6 +143,7 @@
                 if (xhr.responseText == "exito") {
                     alert("La taresa se ha guardado con exito");
                     tbl.innerHTML = "";
+                    listar();
                 }
             }
         };
@@ -159,7 +151,15 @@
         xhr.send(JSON.stringify(datos));
     }
     function listar(){
-        tbllista
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "listatareas.php", true); 
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                tbllista.innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send(null);
+        
     }
 </script>
 
