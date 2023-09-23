@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <table border="1">
+                    <table border="1" class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <td>Id</td>
@@ -107,9 +107,9 @@
     }
     function agregarFilas() {
         var tr = document.createElement("tr");
-        var txttarea = "<input type='text' name='txttarea' />";
-        var checkbox = "<input type='checkbox' name='chkcompletada' />";
-        var btnEliminar = "<input type='button' name='btnEliminar' value='Eliminar' onclick='Eliminar(this)' />";
+        var txttarea = "<input type='text' name='txttarea' class='form-control' />";
+        var checkbox = "<input type='checkbox' name='chkcompletada' class='form-check-input' />";
+        var btnEliminar = "<input type='button' name='btnEliminar' value='Eliminar' onclick='Eliminar(this)' class='btn btn-danger' />";
         var html = "";
         indice = indice + 1;
         html += "<td>" + (indice) + "</td>";
@@ -176,7 +176,7 @@
                     html= html+"<td>"+ filas[i].id + "</td>";
                     html= html+"<td>"+ filas[i].tarea+ "</td>";
                     html= html+"<td>"+ (filas[i].completada==true? "si":"no" )+ "</td>";
-                    html= html+"<td><input type='button' name='btneliminar' class='btn btn-danger' value='Eliminar' onclick='Eliminar("+filas[i].id +")' /></td>";
+                    html= html+"<td><input type='button' name='btneliminar' class='btn btn-danger' value='Eliminar' onclick='EliminarTarea("+filas[i].id +")' /></td>";
                     html= html+"</tr>";
                 }                
                 tbllista.innerHTML =html;
@@ -185,7 +185,7 @@
         xhr.send(null);
         
     }
-    function Eliminar(id){
+    function EliminarTarea(id){
         let res=confirm("¿Esta seguro que quiere eliminar?");
         if(res==false){
             return;
